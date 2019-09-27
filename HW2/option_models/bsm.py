@@ -40,19 +40,50 @@ class BsmModel:
         ''' 
         <-- PUT your implementation here
         '''
-        return 0
+        div_fac = np.exp(-texp*divr)
+        disc_fac = np.exp(-texp*intr)
+        forward = spot / disc_fac * div_fac
+
+        if( texp<0 or vol*np.sqrt(texp)<1e-8 ):
+            return "Not exsit"
+    
+        vol_std = vol*np.sqrt(texp)
+        d1 = np.log(forward/strike)/vol_std + 0.5*vol_std
+        d2 = d1 - vol_std
+        return ss.norm.cdf(cp_sign*d1)
 
     def vega(self, strike, spot, vol, texp, cp_sign=1):
         ''' 
         <-- PUT your implementation here
         '''
-        return 0
+        div_fac = np.exp(-texp*divr)
+        disc_fac = np.exp(-texp*intr)
+        forward = spot / disc_fac * div_fac
+
+        if( texp<0 or vol*np.sqrt(texp)<1e-8 ):
+            return "Not exsit"
+    
+        vol_std = vol*np.sqrt(texp)
+        d1 = np.log(forward/strike)/vol_std + 0.5*vol_std
+        d2 = d1 - vol_std
+        return spot*np.sqrt(texp)*ss.norm.pdf(d1)
 
     def gamma(self, strike, spot, vol, texp, cp_sign=1):
         ''' 
         <-- PUT your implementation here
         '''
-        return 0
+        div_fac = np.exp(-texp*divr)
+        disc_fac = np.exp(-texp*intr)
+        forward = spot / disc_fac * div_fac
+
+        if( texp<0 or vol*np.sqrt(texp)<1e-8 ):
+            return "Not exsit"
+    
+        vol_std = vol*np.sqrt(texp)
+        d1 = np.log(forward/strike)/vol_std + 0.5*vol_std
+        d2 = d1 - vol_std
+        return ss.norm.pdf(d1)/(spot*vol_std)
+     
 
     def impvol(self, price, strike, spot, texp, cp_sign=1):
         iv_func = lambda _vol: \

@@ -35,25 +35,56 @@ class NormalModel:
         return normal_formula(strike, spot, self.vol, texp, intr=self.intr, divr=self.divr, cp_sign=cp_sign)
     
     def delta(self, strike, spot, vol, texp, intr=0.0, divr=0.0, cp_sign=1):
+        
         ''' 
         <-- PUT your implementation here
         '''
-        return 0
+        div_fac = np.exp(-texp*divr)
+        disc_fac = np.exp(-texp*intr)
+        forward = spot / disc_fac * div_fac
+        if( texp<0 or vol*np.sqrt(texp)<1e-8 ):
+            return "Not exsit"
+        
+        vol_std = np.fmax(vol * np.sqrt(texp), 1.0e-16)
+        d = (forward - strike) / vol_std
+        
+        return ss.norm.cdf(d)
 
     def vega(self, strike, spot, vol, texp, intr=0.0, divr=0.0, cp_sign=1):
         ''' 
         <-- PUT your implementation here
         '''
-        return 0
+        div_fac = np.exp(-texp*divr)
+        disc_fac = np.exp(-texp*intr)
+        forward = spot / disc_fac * div_fac
+        if( texp<0 or vol*np.sqrt(texp)<1e-8 ):
+            return "Not exsit"
+        
+        vol_std = np.fmax(vol * np.sqrt(texp), 1.0e-16)
+        d = (forward - strike) / vol_std
+        
+        return np.sqrt(texp)*ss.norm.pdf(d)
 
     def gamma(self, strike, spot, vol, texp, intr=0.0, divr=0.0, cp_sign=1):
         ''' 
         <-- PUT your implementation here
         '''
-        return 0
+        div_fac = np.exp(-texp*divr)
+        disc_fac = np.exp(-texp*intr)
+        forward = spot / disc_fac * div_fac
+        if( texp<0 or vol*np.sqrt(texp)<1e-8 ):
+            return "Not exsit"
+        
+        vol_std = np.fmax(vol * np.sqrt(texp), 1.0e-16)
+        
+        return ss.norm.pdf(d)/ vol_std
 
     def impvol(self, price, strike, spot, texp, cp_sign=1):
         ''' 
         <-- PUT your implementation here
         '''
-        return 0
+        iv_func = lambda _vol: \
+        nomal_formula(strike, spot, _vol, texp, self.intr, self.divr, cp_sign) - price
+        vol = sopt.brentq(iv_func, 0, 10)
+        return vol
+        
