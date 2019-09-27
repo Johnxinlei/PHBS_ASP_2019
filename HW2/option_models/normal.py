@@ -39,13 +39,11 @@ class NormalModel:
         ''' 
         <-- PUT your implementation here
         '''
-        div_fac = np.exp(-texp*divr)
-        disc_fac = np.exp(-texp*intr)
+        div_fac = np.exp(-texp*self.divr)
+        disc_fac = np.exp(-texp*self.intr)
         forward = spot / disc_fac * div_fac
-        if( texp<0 or vol*np.sqrt(texp)<1e-8 ):
-            return "Not exsit"
-        
-        vol_std = np.fmax(vol * np.sqrt(texp), 1.0e-16)
+   
+        vol_std = np.fmax(self.vol * np.sqrt(texp), 1.0e-16)
         d = (forward - strike) / vol_std
         
         return ss.norm.cdf(d)
@@ -54,13 +52,10 @@ class NormalModel:
         ''' 
         <-- PUT your implementation here
         '''
-        div_fac = np.exp(-texp*divr)
-        disc_fac = np.exp(-texp*intr)
+        div_fac = np.exp(-texp*self.divr)
+        disc_fac = np.exp(-texp*self.intr)
         forward = spot / disc_fac * div_fac
-        if( texp<0 or vol*np.sqrt(texp)<1e-8 ):
-            return "Not exsit"
-        
-        vol_std = np.fmax(vol * np.sqrt(texp), 1.0e-16)
+        vol_std = np.fmax(self.vol * np.sqrt(texp), 1.0e-16)
         d = (forward - strike) / vol_std
         
         return np.sqrt(texp)*ss.norm.pdf(d)
@@ -69,13 +64,10 @@ class NormalModel:
         ''' 
         <-- PUT your implementation here
         '''
-        div_fac = np.exp(-texp*divr)
-        disc_fac = np.exp(-texp*intr)
+        div_fac = np.exp(-texp*self.divr)
+        disc_fac = np.exp(-texp*self.intr)
         forward = spot / disc_fac * div_fac
-        if( texp<0 or vol*np.sqrt(texp)<1e-8 ):
-            return "Not exsit"
-        
-        vol_std = np.fmax(vol * np.sqrt(texp), 1.0e-16)
+        vol_std = np.fmax(self.vol * np.sqrt(texp), 1.0e-16)
         
         return ss.norm.pdf(d)/ vol_std
 

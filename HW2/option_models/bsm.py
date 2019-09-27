@@ -40,14 +40,10 @@ class BsmModel:
         ''' 
         <-- PUT your implementation here
         '''
-        div_fac = np.exp(-texp*divr)
-        disc_fac = np.exp(-texp*intr)
+        div_fac = np.exp(-texp*self.divr)
+        disc_fac = np.exp(-texp*self.intr)
         forward = spot / disc_fac * div_fac
-
-        if( texp<0 or vol*np.sqrt(texp)<1e-8 ):
-            return "Not exsit"
-    
-        vol_std = vol*np.sqrt(texp)
+        vol_std = self.vol*np.sqrt(texp)
         d1 = np.log(forward/strike)/vol_std + 0.5*vol_std
         d2 = d1 - vol_std
         return ss.norm.cdf(cp_sign*d1)
@@ -56,14 +52,10 @@ class BsmModel:
         ''' 
         <-- PUT your implementation here
         '''
-        div_fac = np.exp(-texp*divr)
-        disc_fac = np.exp(-texp*intr)
+        div_fac = np.exp(-texp*self.divr)
+        disc_fac = np.exp(-texp*self.intr)
         forward = spot / disc_fac * div_fac
-
-        if( texp<0 or vol*np.sqrt(texp)<1e-8 ):
-            return "Not exsit"
-    
-        vol_std = vol*np.sqrt(texp)
+        vol_std = self.vol*np.sqrt(texp)
         d1 = np.log(forward/strike)/vol_std + 0.5*vol_std
         d2 = d1 - vol_std
         return spot*np.sqrt(texp)*ss.norm.pdf(d1)
@@ -72,14 +64,10 @@ class BsmModel:
         ''' 
         <-- PUT your implementation here
         '''
-        div_fac = np.exp(-texp*divr)
-        disc_fac = np.exp(-texp*intr)
+        div_fac = np.exp(-texp*self.divr)
+        disc_fac = np.exp(-texp*self.intr)
         forward = spot / disc_fac * div_fac
-
-        if( texp<0 or vol*np.sqrt(texp)<1e-8 ):
-            return "Not exsit"
-    
-        vol_std = vol*np.sqrt(texp)
+        vol_std = self.vol*np.sqrt(texp)
         d1 = np.log(forward/strike)/vol_std + 0.5*vol_std
         d2 = d1 - vol_std
         return ss.norm.pdf(d1)/(spot*vol_std)

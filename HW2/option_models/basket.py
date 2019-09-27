@@ -31,7 +31,6 @@ def basket_price_mc_cv(
 
 #    compute price2: mc price based on normal model
 #    make sure you use the same seed
-
     # Restore the state in order to generate the same state
     np.random.set_state(rand_st)  
     price2 = basket_price_mc(
@@ -105,7 +104,6 @@ def basket_price_norm_analytic(
     vol_N = np.sqrt(weights @ cov_m @ weights[:,None])
     
     price = normal_formula(strike, basket_spot, vol_N, texp, intr=intr, divr=divr, cp_sign=cp_sign)
-    
     return price[0]
 
     
